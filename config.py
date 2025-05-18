@@ -32,16 +32,19 @@ app = {
     'port': int(os.getenv('PORT', 3000)),
     'baseUrl': os.getenv('BASE_URL', 'http://localhost:3000'),
     'jwtSecret': os.getenv('JWT_SECRET', 'your-secret-key'),
-    'jwtExpiration': os.getenv('JWT_EXPIRATION', '24h')
+    'jwtExpiration': os.getenv('JWT_EXPIRATION', '24h'),
+    'features': {
+        'enableRegistration': True,
+        'enableFileUpload': True,
+        'enableSearch': True
+    }
 }
 
 # File upload configuration
 upload = {
-    'uploadDir': os.path.join(os.path.dirname(__file__), 'public', 'uploads'),
-    'maxSize': 5 * 1024 * 1024,  # 5MB
-    'allowedExtensions': {'png', 'jpg', 'jpeg', 'gif'},
-    'imageQuality': 85,
-    'thumbnailSize': (300, 300)
+    'uploadDir': 'uploads',
+    'maxSize': 16 * 1024 * 1024,
+    'allowedExtensions': {'png', 'jpg', 'jpeg', 'gif'}
 }
 
 # API configuration
@@ -67,9 +70,9 @@ os.makedirs(upload['uploadDir'], exist_ok=True)
 
 # Logging configuration
 logging = {
-    'level': os.getenv('LOG_LEVEL', 'INFO'),
+    'level': 'INFO',
     'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    'file': os.path.join(os.path.dirname(__file__), 'logs', 'app.log')
+    'file': 'logs/app.log'
 }
 
 # Create logs directory if it doesn't exist

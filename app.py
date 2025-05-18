@@ -1,35 +1,28 @@
-import pymysql
-pymysql.install_as_MySQLdb()
-
+import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_mail import Message
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-import os
 from datetime import datetime, timedelta
 import json
 import logging
 from logging.handlers import RotatingFileHandler
-from config import db as db_config, email, app as app_config, upload, api, logging as logging_config, messages
+from config import db as db_config, email, app as app_config, upload, api, logging as logging_config, messages, features
 from extensions import db, mail, jwt, cors
 from models import User, Property, Agent, ContactMessage
 
 def create_app():
-    # Initialize Flask app
     app = Flask(__name__, static_folder='public')
-    
-    # Create upload directory if it doesn't exist
     os.makedirs(upload['uploadDir'], exist_ok=True)
+    os.makedirs(os.path.dirname(logging_config['file']), exist_ok=True)
     
-    # Configure Flask app
-    app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql://{db_config['user']}:{db_config['password']}@{db_config['host']}/{db_config['database']}"
+    app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_config['database']}.db"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET_KEY'] = app_config['jwtSecret']
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
     app.config['MAX_CONTENT_LENGTH'] = upload['maxSize']
     
-    # Configure Flask-Mail
     app.config['MAIL_SERVER'] = email['host']
     app.config['MAIL_PORT'] = email['port']
     app.config['MAIL_USE_TLS'] = not email['secure']
@@ -37,17 +30,15 @@ def create_app():
     app.config['MAIL_PASSWORD'] = email['auth']['pass']
     app.config['MAIL_DEFAULT_SENDER'] = email['from']
     
-    # Configure logging
     handler = RotatingFileHandler(
         logging_config['file'],
-        maxBytes=10000000,  # 10MB
+        maxBytes=10000000,
         backupCount=5
     )
     handler.setFormatter(logging.Formatter(logging_config['format']))
     app.logger.addHandler(handler)
     app.logger.setLevel(logging_config['level'])
     
-    # Initialize extensions
     db.init_app(app)
     mail.init_app(app)
     jwt.init_app(app)
@@ -59,7 +50,6 @@ def create_app():
         }
     })
     
-    # Create database tables
     with app.app_context():
         try:
             db.create_all()
@@ -67,7 +57,6 @@ def create_app():
             app.logger.error(f"Error creating database tables: {str(e)}")
             raise
     
-    # Routes for static files
     @app.route('/')
     def index():
         return send_from_directory('public', 'index.html')
@@ -76,10 +65,9 @@ def create_app():
     def serve_static(path):
         return send_from_directory('public', path)
     
-    # Authentication routes
     @app.route('/api/auth/register', methods=['POST'])
     def register():
-        if not app_config['features']['enableRegistration']:
+        if not features['enableRegistration']:
             return jsonify({'error': messages['errors']['unauthorized']}), 403
     
         data = request.get_json()
@@ -96,7 +84,6 @@ def create_app():
         db.session.add(user)
         db.session.commit()
         
-        # Send welcome email
         msg = Message(
             'Welcome to PrimeHomes',
             recipients=[user.email]
@@ -117,7 +104,6 @@ def create_app():
         
         return jsonify({'error': messages['errors']['invalidCredentials']}), 401
     
-    # Property routes
     @app.route('/api/properties', methods=['GET'])
     def get_properties():
         filters = request.args.to_dict()
@@ -132,13 +118,12 @@ def create_app():
     @app.route('/api/properties', methods=['POST'])
     @jwt_required()
     def create_property():
-        if not app_config['features']['enableFileUpload']:
+        if not features['enableFileUpload']:
             return jsonify({'error': messages['errors']['unauthorized']}), 403
     
         data = request.form.to_dict()
         images = request.files.getlist('images')
         
-        # Handle image uploads
         image_paths = []
         for image in images:
             if image and allowed_file(image.filename):
@@ -186,7 +171,6 @@ def create_app():
         if property.agent_id != get_jwt_identity():
             return jsonify({'error': messages['errors']['unauthorized']}), 403
         
-        # Delete associated images
         for image_path in json.loads(property.images):
             try:
                 os.remove(image_path)
@@ -197,7 +181,6 @@ def create_app():
         db.session.commit()
         return '', 204
     
-    # Agent routes
     @app.route('/api/agents', methods=['GET'])
     def get_agents():
         agents = Agent.query.all()
@@ -237,7 +220,6 @@ def create_app():
         
         return jsonify(agent.to_dict()), 201
     
-    # Contact routes
     @app.route('/api/contact', methods=['POST'])
     def submit_contact():
         data = request.get_json()
@@ -253,7 +235,6 @@ def create_app():
         db.session.add(message)
         db.session.commit()
         
-        # Send notification email
         msg = Message(
             'New Contact Form Submission',
             recipients=[email['from']]
@@ -270,10 +251,9 @@ def create_app():
         
         return jsonify({'message': messages['success']['emailSent']}), 201
     
-    # Search routes
     @app.route('/api/search/properties', methods=['GET'])
     def search_properties():
-        if not app_config['features']['enableSearch']:
+        if not features['enableSearch']:
             return jsonify({'error': messages['errors']['unauthorized']}), 403
     
         query = request.args.get('q', '')
@@ -286,7 +266,7 @@ def create_app():
     
     @app.route('/api/search/agents', methods=['GET'])
     def search_agents():
-        if not app_config['features']['enableSearch']:
+        if not features['enableSearch']:
             return jsonify({'error': messages['errors']['unauthorized']}), 403
     
         query = request.args.get('q', '')
@@ -296,11 +276,10 @@ def create_app():
         ).all()
         return jsonify([a.to_dict() for a in agents])
     
-    # File upload route
     @app.route('/api/upload', methods=['POST'])
     @jwt_required()
     def upload_file():
-        if not app_config['features']['enableFileUpload']:
+        if not features['enableFileUpload']:
             return jsonify({'error': messages['errors']['unauthorized']}), 403
     
         if 'file' not in request.files:

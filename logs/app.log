@@ -1,0 +1,8 @@
+2025-05-18 11:07:56,746 - app - ERROR - Error creating database tables: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+2025-05-18 11:18:13,014 - app - ERROR - Error creating database tables: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+2025-05-18 11:19:18,510 - app - ERROR - Error creating database tables: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+2025-05-18 11:22:33,507 - app - ERROR - Error creating database tables: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
