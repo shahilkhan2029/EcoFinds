@@ -62,7 +62,7 @@ class EmailService {
                 If you did not request this, please ignore this email.
                 
                 Best regards,
-                PrimeHomes Team
+                EcoFinds Team
             `
         );
     }
@@ -70,11 +70,11 @@ class EmailService {
     async sendWelcomeEmail(email, name) {
         return this.sendEmail(
             email,
-            'Welcome to PrimeHomes',
+            'Welcome to EcoFinds',
             `
                 Hello ${name},
                 
-                Welcome to PrimeHomes! We're excited to have you on board.
+                Welcome to EcoFinds! We're excited to have you on board.
                 
                 You can now:
                 - Browse our properties
@@ -85,7 +85,7 @@ class EmailService {
                 If you have any questions, feel free to contact us.
                 
                 Best regards,
-                PrimeHomes Team
+                EcoFinds Team
             `
         );
     }
@@ -113,7 +113,7 @@ class EmailService {
                 Please respond to this inquiry as soon as possible.
                 
                 Best regards,
-                PrimeHomes Team
+                EcoFinds Team
             `,
             {
                 replyTo: inquiry.email

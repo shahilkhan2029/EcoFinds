@@ -260,10 +260,43 @@
 <body>
     <div class="container">
         <div class="search-results">
-            <div class="search-summary">
-                <h2>Search Results</h2>
-                <div class="search-filters" id="searchFilters">
-                    <!-- Search filters will be populated by JavaScript -->
+            <div class="search-header">
+                <h1>Search Results</h1>
+                <p>Find sustainable products that match your criteria</p>
+            </div>
+
+            <div class="search-filters">
+                <div class="filter-group">
+                    <label>Category</label>
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="recycled">Recycled</option>
+                        <option value="organic">Organic</option>
+                        <option value="upcycled">Upcycled</option>
+                        <option value="eco-furniture">Eco Furniture</option>
+                        <option value="sustainable-fashion">Sustainable Fashion</option>
+                        <option value="natural-beauty">Natural Beauty</option>
+                        <option value="eco-home">Eco Home</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <select id="priceFilter">
+                        <option value="">Any Price</option>
+                        <option value="0-50">$0 - $50</option>
+                        <option value="51-100">$51 - $100</option>
+                        <option value="101-200">$101 - $200</option>
+                        <option value="201+">$201+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sortFilter">
+                        <option value="newest">Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Rating</option>
+                    </select>
                 </div>
             </div>
 

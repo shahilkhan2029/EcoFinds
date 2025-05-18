@@ -375,156 +375,102 @@
     </style>
 </head>
 <body>
-    <header class="page-header">
-        <div class="page-header-content">
-            <h1>Add New Property</h1>
-            <p>Fill in the details below to list your property</p>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="alert alert-success" id="successAlert">
-            Property added successfully!
-        </div>
-        <div class="alert alert-danger" id="errorAlert">
-            An error occurred. Please try again.
+    <div class="add-product-container">
+        <div class="add-product-header">
+            <h1>Add Your Product</h1>
+            <p>List your sustainable products on EcoFinds</p>
         </div>
 
-        <form id="addPropertyForm" class="form-container">
-            <div class="form-grid">
+        <form id="addProductForm" class="add-product-form">
+            <div class="form-section">
+                <h2>Product Information</h2>
                 <div class="form-group">
-                    <label for="title">Property Title</label>
-                    <input type="text" id="title" name="title" class="form-control" required>
-                    <div class="error-message">Please enter a property title</div>
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" name="productName" required>
                 </div>
-
                 <div class="form-group">
-                    <label for="type">Property Type</label>
-                    <select id="type" name="type" class="form-control" required>
-                        <option value="">Select Type</option>
-                        <option value="sale">For Sale</option>
-                        <option value="rent">For Rent</option>
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="recycled">Recycled</option>
+                        <option value="organic">Organic</option>
+                        <option value="upcycled">Upcycled</option>
+                        <option value="eco-furniture">Eco Furniture</option>
+                        <option value="sustainable-fashion">Sustainable Fashion</option>
+                        <option value="natural-beauty">Natural Beauty</option>
+                        <option value="eco-home">Eco Home</option>
                     </select>
-                    <div class="error-message">Please select a property type</div>
                 </div>
-
                 <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="number" id="price" name="price" class="form-control" required min="0">
-                    <div class="error-message">Please enter a valid price</div>
+                    <label for="price">Price ($)</label>
+                    <input type="number" id="price" name="price" min="0" step="0.01" required>
                 </div>
-
                 <div class="form-group">
-                    <label for="property_type">Property Category</label>
-                    <select id="property_type" name="property_type" class="form-control" required>
-                        <option value="">Select Category</option>
-                        <option value="house">House</option>
-                        <option value="apartment">Apartment</option>
-                        <option value="villa">Villa</option>
-                        <option value="commercial">Commercial</option>
-                    </select>
-                    <div class="error-message">Please select a property category</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" id="address" name="address" class="form-control" required>
-                    <div class="error-message">Please enter the property address</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="location">Location</label>
-                    <input type="text" id="location" name="location" class="form-control" required>
-                    <div class="error-message">Please enter the property location</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="bedrooms">Bedrooms</label>
-                    <input type="number" id="bedrooms" name="bedrooms" class="form-control" required min="0">
-                    <div class="error-message">Please enter the number of bedrooms</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="bathrooms">Bathrooms</label>
-                    <input type="number" id="bathrooms" name="bathrooms" class="form-control" required min="0">
-                    <div class="error-message">Please enter the number of bathrooms</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="area">Area (sq ft)</label>
-                    <input type="number" id="area" name="area" class="form-control" required min="0">
-                    <div class="error-message">Please enter the property area</div>
-                </div>
-
-                <div class="form-group full-width">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
-                    <div class="error-message">Please enter a property description</div>
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Amenities</label>
-                    <div class="amenities-group">
-                        <label class="amenity-item">
-                            <input type="checkbox" name="amenities[]" value="parking">
-                            <span>Parking</span>
-                        </label>
-                        <label class="amenity-item">
-                            <input type="checkbox" name="amenities[]" value="pool">
-                            <span>Swimming Pool</span>
-                        </label>
-                        <label class="amenity-item">
-                            <input type="checkbox" name="amenities[]" value="garden">
-                            <span>Garden</span>
-                        </label>
-                        <label class="amenity-item">
-                            <input type="checkbox" name="amenities[]" value="security">
-                            <span>Security</span>
-                        </label>
-                        <label class="amenity-item">
-                            <input type="checkbox" name="amenities[]" value="gym">
-                            <span>Gym</span>
-                        </label>
-                        <label class="amenity-item">
-                            <input type="checkbox" name="amenities[]" value="elevator">
-                            <span>Elevator</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Main Image</label>
-                    <div class="file-upload">
-                        <input type="file" id="main_image" name="main_image" class="file-upload-input" accept="image/*" required>
-                        <div class="file-upload-button">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Choose Main Image</span>
-                        </div>
-                    </div>
-                    <div class="file-preview" id="mainImagePreview"></div>
-                    <div class="error-message">Please select a main image</div>
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Gallery Images</label>
-                    <div class="file-upload">
-                        <input type="file" id="gallery_images" name="gallery_images" class="file-upload-input" accept="image/*" multiple>
-                        <div class="file-upload-button">
-                            <i class="fas fa-images"></i>
-                            <span>Choose Gallery Images</span>
-                        </div>
-                    </div>
-                    <div class="file-preview" id="galleryPreview"></div>
+                    <label for="description">Product Description</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
                 </div>
             </div>
 
-            <button type="submit" class="submit-btn" id="submitBtn">
-                Add Property
-            </button>
+            <div class="form-section">
+                <h2>Product Images</h2>
+                <div class="form-group">
+                    <label for="productImages">Upload Images</label>
+                    <input type="file" id="productImages" name="productImages" multiple accept="image/*" required>
+                    <div class="image-preview" id="imagePreview">
+                        <!-- Image previews will be shown here -->
+                    </div>
+                </div>
+            </div>
 
-            <div class="loading" id="loading">
-                <div class="loading-spinner"></div>
-                <p>Adding property...</p>
+            <div class="form-section">
+                <h2>Sustainability Information</h2>
+                <div class="form-group">
+                    <label>Eco-Friendly Certifications</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="recycled" name="certifications" value="recycled">
+                            <label for="recycled">Made from Recycled Materials</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="organic" name="certifications" value="organic">
+                            <label for="organic">Organic Certified</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fairTrade" name="certifications" value="fairTrade">
+                            <label for="fairTrade">Fair Trade Certified</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="vegan" name="certifications" value="vegan">
+                            <label for="vegan">Vegan Certified</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sustainabilityDetails">Additional Sustainability Details</label>
+                    <textarea id="sustainabilityDetails" name="sustainabilityDetails" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Shipping Information</h2>
+                <div class="form-group">
+                    <label for="shippingMethod">Shipping Method</label>
+                    <select id="shippingMethod" name="shippingMethod" required>
+                        <option value="">Select shipping method</option>
+                        <option value="standard">Standard Shipping</option>
+                        <option value="express">Express Shipping</option>
+                        <option value="eco">Eco-Friendly Shipping</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="shippingCost">Shipping Cost ($)</label>
+                    <input type="number" id="shippingCost" name="shippingCost" min="0" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">List Product</button>
+                <button type="button" class="cancel-btn">Cancel</button>
             </div>
         </form>
     </div>
@@ -568,7 +514,7 @@
         // Form Validation
         function validateForm() {
             let isValid = true;
-            const form = document.getElementById('addPropertyForm');
+            const form = document.getElementById('addProductForm');
             const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
 
             inputs.forEach(input => {
@@ -584,17 +530,17 @@
         }
 
         // Form Submission
-        document.getElementById('addPropertyForm').addEventListener('submit', async function(e) {
+        document.getElementById('addProductForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             if (!validateForm()) {
                 return;
             }
 
-            const submitBtn = document.getElementById('submitBtn');
-            const loading = document.getElementById('loading');
-            const successAlert = document.getElementById('successAlert');
-            const errorAlert = document.getElementById('errorAlert');
+            const submitBtn = document.querySelector('.submit-btn');
+            const loading = document.querySelector('.loading');
+            const successAlert = document.querySelector('.alert-success');
+            const errorAlert = document.querySelector('.alert-danger');
 
             submitBtn.disabled = true;
             loading.style.display = 'block';
@@ -607,8 +553,7 @@
                 successAlert.classList.add('show');
                 errorAlert.classList.remove('show');
                 this.reset();
-                document.getElementById('mainImagePreview').innerHTML = '';
-                document.getElementById('galleryPreview').innerHTML = '';
+                document.getElementById('imagePreview').innerHTML = '';
 
                 // Hide success message after 3 seconds
                 setTimeout(() => {
@@ -625,12 +570,8 @@
         });
 
         // File Input Event Listeners
-        document.getElementById('main_image').addEventListener('change', function(e) {
-            handleFileSelect(e, 'mainImagePreview');
-        });
-
-        document.getElementById('gallery_images').addEventListener('change', function(e) {
-            handleFileSelect(e, 'galleryPreview');
+        document.getElementById('productImages').addEventListener('change', function(e) {
+            handleFileSelect(e, 'imagePreview');
         });
     </script>
 </body>

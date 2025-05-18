@@ -6,6 +6,10 @@ from datetime import datetime
 
 services_bp = Blueprint('services', __name__)
 
+@services_bp.route('/services')
+def services():
+    return render_template('services/index.html')
+
 @services_bp.route('/services/property-valuation', methods=['GET', 'POST'])
 def property_valuation():
     if request.method == 'POST':

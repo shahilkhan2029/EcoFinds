@@ -1,6 +1,6 @@
 -- Create the database if it doesn't exist
-CREATE DATABASE IF NOT EXISTS primehomes;
-USE primehomes;
+CREATE DATABASE IF NOT EXISTS ecofinds;
+USE ecofinds;
 
 -- Create users table with role and password reset fields
 CREATE TABLE IF NOT EXISTS users (

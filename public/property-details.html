@@ -34,9 +34,6 @@
                         <a class="nav-link" href="agents.html">Agents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="services/home-loans.html">Services</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="contact.html">Contact</a>
                     </li>
                 </ul>
@@ -67,10 +64,50 @@
             <div class="row">
                 <!-- Property Gallery -->
                 <div class="col-lg-8">
-                    <div class="property-gallery">
-                        <img src="" alt="Property Image" class="img-fluid main-image mb-3" id="mainImage">
-                        <div class="row g-2" id="thumbnailGallery">
-                            <!-- Thumbnails will be loaded dynamically -->
+                    <div class="product-details">
+                        <div class="product-gallery">
+                            <div class="main-image">
+                                <img id="mainImage" src="" alt="Product Image">
+                            </div>
+                            <div class="thumbnail-list" id="thumbnailList">
+                                <!-- Thumbnails will be populated dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <h1 id="productTitle"></h1>
+                            <div class="product-meta">
+                                <span class="category" id="productCategory"></span>
+                                <span class="rating" id="productRating"></span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price" id="productPrice"></span>
+                            </div>
+                            <div class="product-description" id="productDescription">
+                                <!-- Description will be populated dynamically -->
+                            </div>
+                            <div class="product-features">
+                                <h3>Product Features</h3>
+                                <ul id="productFeatures">
+                                    <!-- Features will be populated dynamically -->
+                                </ul>
+                            </div>
+                            <div class="sustainability-info">
+                                <h3>Sustainability Information</h3>
+                                <div class="sustainability-badges" id="sustainabilityBadges">
+                                    <!-- Badges will be populated dynamically -->
+                                </div>
+                            </div>
+                            <div class="seller-info">
+                                <h3>Seller Information</h3>
+                                <div class="seller-details" id="sellerDetails">
+                                    <!-- Seller details will be populated dynamically -->
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="add-to-cart-btn">Add to Cart</button>
+                                <button class="contact-seller-btn">Contact Seller</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -156,6 +193,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="related-products">
+                <h2>Related Products</h2>
+                <div class="product-grid" id="relatedProducts">
+                    <!-- Related products will be populated dynamically -->
                 </div>
             </div>
         </div>

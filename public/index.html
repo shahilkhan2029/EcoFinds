@@ -3,65 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeHomes - Find Your Dream Property</title>
+    <title>EcoFinds - Find Your Sustainable Products</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Global Styles */
-        :root {
-            --primary: #4a6fa5;
-            --secondary: #166088;
-            --accent: #4fc3f7;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --success: #28a745;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-        
-        .btn-accent {
-            background: var(--accent);
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        /* Header Styles */
+        /* Page-specific styles */
         .main-header {
             background-color: white;
             padding: 20px 0;
@@ -70,6 +16,7 @@
             top: 0;
             z-index: 1000;
             transition: all 0.3s ease;
+            width: 100%;
         }
 
         .main-header:hover {
@@ -193,9 +140,8 @@
             background-color: #0056b3;
         }
 
-        /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/random/1920x1080/?house') no-repeat center center/cover;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/random/1920x1080/?eco-friendly') no-repeat center center/cover;
             height: 500px;
             display: flex;
             align-items: center;
@@ -243,7 +189,6 @@
             }
         }
 
-        /* Search Section */
         .search-section {
             background-color: white;
             padding: 40px 0;
@@ -263,42 +208,6 @@
             padding: 0 20px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #2c3e50;
-        }
-
-        .form-group select,
-        .form-group input {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        .search-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-btn:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-        }
-
-        /* Featured Properties Section */
         .featured-section {
             padding: 80px 0;
         }
@@ -317,13 +226,6 @@
         .section-title p {
             color: #666;
             font-size: 1.1rem;
-        }
-
-        .properties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 0 20px;
         }
 
         .categories-grid {
@@ -444,7 +346,6 @@
             transform: translateY(-2px);
         }
 
-        /* Footer */
         .main-footer {
             background-color: #2c3e50;
             color: white;
@@ -516,7 +417,6 @@
             color: #bdc3c7;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .main-nav {
                 display: none;
@@ -530,7 +430,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .properties-grid {
+            .categories-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -540,15 +440,14 @@
     <header class="main-header">
         <div class="main-header-content">
             <a href="index.html" class="logo">
-                <i class="fas fa-home"></i>
+                <i class="fas fa-leaf"></i>
                 <h1>EcoFinds</h1>
             </a>
             <nav class="main-nav">
                 <a href="index.html" class="nav-link active">Home</a>
-                <a href="buy-property.html" class="nav-link">Buy</a>
-                <a href="rent-property.html" class="nav-link">Rent</a>
-                <a href="agents.html" class="nav-link">Agents</a>
-                <a href="services/home-loans.html" class="nav-link">Services</a>
+                <a href="category.html?type=recycled" class="nav-link">Recycled</a>
+                <a href="category.html?type=organic" class="nav-link">Organic</a>
+                <a href="category.html?type=upcycled" class="nav-link">Upcycled</a>
                 <a href="contact.html" class="nav-link">Contact</a>
             </nav>
             <div class="auth-buttons">
@@ -560,19 +459,24 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Find Your Dream Home</h1>
-            <p>Discover the perfect property that matches your lifestyle and preferences</p>
+            <h1>Find Sustainable Products</h1>
+            <p>Discover eco-friendly products that make a difference</p>
         </div>
     </section>
 
     <section class="search-section">
         <form class="search-form" id="searchForm">
             <div class="form-group">
-                <label for="want_to">I want to</label>
-                <select id="want_to" name="want_to">
+                <label for="category">Category</label>
+                <select id="category" name="category">
                     <option value="">Select</option>
-                    <option value="buy">Buy</option>
-                    <option value="rent">Rent</option>
+                    <option value="recycled">Recycled</option>
+                    <option value="organic">Organic</option>
+                    <option value="upcycled">Upcycled</option>
+                    <option value="furniture">Eco Furniture</option>
+                    <option value="clothing">Sustainable Fashion</option>
+                    <option value="beauty">Natural Beauty</option>
+                    <option value="home">Eco Home</option>
                 </select>
             </div>
             <div class="form-group">
@@ -583,29 +487,18 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="property_type">Property Type</label>
-                <select id="property_type" name="property_type">
-                    <option value="">Select</option>
-                    <option value="house">House</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="villa">Villa</option>
-                    <option value="commercial">Commercial</option>
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="price_range">Price Range</label>
                 <select id="price_range" name="price_range">
                     <option value="">Select</option>
-                    <option value="0-100000">$0 - $100,000</option>
-                    <option value="100000-200000">$100,000 - $200,000</option>
-                    <option value="200000-300000">$200,000 - $300,000</option>
-                    <option value="300000-400000">$300,000 - $400,000</option>
-                    <option value="400000-500000">$400,000 - $500,000</option>
-                    <option value="500000-1000000">$500,000 - $1,000,000</option>
-                    <option value="1000000-999999999">$1,000,000+</option>
+                    <option value="0-50">$0 - $50</option>
+                    <option value="50-100">$50 - $100</option>
+                    <option value="100-200">$100 - $200</option>
+                    <option value="200-500">$200 - $500</option>
+                    <option value="500-1000">$500 - $1000</option>
+                    <option value="1000-999999">$1000+</option>
                 </select>
             </div>
-            <button type="submit" class="search-btn">Search</button>
+            <button type="submit" class="btn">Search</button>
         </form>
     </section>
 
@@ -623,7 +516,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>About Us</h3>
-                <p>PrimeHomes is your trusted partner in finding the perfect property. We offer a wide range of real estate services to meet your needs.</p>
+                <p>EcoFinds is your trusted partner in finding eco-friendly products. We offer a wide range of sustainable products to meet your needs.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -635,21 +528,21 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="buy-property.html">Buy Property</a></li>
-                    <li><a href="rent-property.html">Rent Property</a></li>
-                    <li><a href="agents.html">Our Agents</a></li>
+                    <li><a href="category.html?type=recycled">Recycled</a></li>
+                    <li><a href="category.html?type=organic">Organic</a></li>
+                    <li><a href="category.html?type=upcycled">Upcycled</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Contact Info</h3>
-                <p><i class="fas fa-map-marker-alt"></i> 123 Real Estate St, City, Country</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Eco Street, Green City</p>
                 <p><i class="fas fa-phone"></i> +1 234 567 890</p>
-                <p><i class="fas fa-envelope"></i> info@primehomes.com</p>
+                <p><i class="fas fa-envelope"></i> info@ecofinds.com</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 PrimeHomes. All rights reserved.</p>
+            <p>&copy; 2024 EcoFinds. All rights reserved.</p>
         </div>
     </footer>
 
@@ -661,45 +554,45 @@
         const categories = [
             {
                 id: 1,
-                name: 'Apartments',
-                icon: 'building',
-                description: 'Find your perfect living space',
-                image: 'https://source.unsplash.com/random/800x600/?apartment'
+                name: 'Recycled Products',
+                icon: 'recycle',
+                description: 'Find products made from recycled materials',
+                image: 'images/products/recycled-products.jpg'
             },
             {
                 id: 2,
-                name: 'Vehicles',
-                icon: 'car',
-                description: 'Browse cars, bikes, and more',
-                image: 'https://source.unsplash.com/random/800x600/?car'
+                name: 'Organic Products',
+                icon: 'leaf',
+                description: 'Browse natural and organic products',
+                image: 'images/products/organic-products.jpg'
             },
             {
                 id: 3,
-                name: 'Electronics',
-                icon: 'laptop',
-                description: 'Latest gadgets and devices',
-                image: 'https://source.unsplash.com/random/800x600/?electronics'
+                name: 'Upcycled Items',
+                icon: 'hand-holding-heart',
+                description: 'Discover creatively upcycled products',
+                image: 'images/products/upcycled-items.jpg'
             },
             {
                 id: 4,
-                name: 'Books',
-                icon: 'book',
-                description: 'Explore our collection of books',
-                image: 'https://source.unsplash.com/random/800x600/?books'
+                name: 'Eco Furniture',
+                icon: 'couch',
+                description: 'Sustainable furniture for your home',
+                image: 'images/products/eco-furniture.jpg'
             },
             {
                 id: 5,
-                name: 'Fashion',
+                name: 'Sustainable Fashion',
                 icon: 'tshirt',
-                description: 'Trendy clothing and accessories',
-                image: 'https://source.unsplash.com/random/800x600/?fashion'
+                description: 'Eco-friendly clothing and accessories',
+                image: 'images/products/sustainable-fashion.jpg'
             },
             {
                 id: 6,
-                name: 'Home & Garden',
-                icon: 'home',
-                description: 'Everything for your home',
-                image: 'https://source.unsplash.com/random/800x600/?home'
+                name: 'Natural Beauty',
+                icon: 'spa',
+                description: 'Organic beauty and skincare products',
+                image: 'images/products/natural-beauty.jpg'
             }
         ];
 

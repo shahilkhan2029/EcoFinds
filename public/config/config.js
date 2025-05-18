@@ -3,7 +3,7 @@ const dbConfig = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'primehomes'
+    database: process.env.DB_NAME || 'ecofinds'
 };
 
 // Email Configuration
@@ -15,12 +15,12 @@ const emailConfig = {
         user: process.env.SMTP_USER || '',
         pass: process.env.SMTP_PASS || ''
     },
-    from: process.env.EMAIL_FROM || 'noreply@primehomes.com'
+    from: process.env.EMAIL_FROM || 'noreply@ecofinds.com'
 };
 
 // Application Configuration
 const appConfig = {
-    name: 'PrimeHomes',
+    name: 'EcoFinds',
     version: '1.0.0',
     environment: process.env.NODE_ENV || 'development',
     port: process.env.PORT || 3000,

@@ -6,7 +6,7 @@ load_dotenv()
 
 # Database configuration
 db = {
-    'database': os.getenv('DB_NAME', 'primehomes')
+    'database': os.getenv('DB_NAME', 'ecofinds')
 }
 
 # Email configuration
@@ -18,7 +18,7 @@ email = {
         'user': os.getenv('SMTP_USER', ''),
         'pass': os.getenv('SMTP_PASS', '')
     },
-    'from': os.getenv('EMAIL_FROM', 'noreply@primehomes.com')
+    'from': os.getenv('EMAIL_FROM', 'noreply@ecofinds.com')
 }
 
 # Application configuration
@@ -67,7 +67,7 @@ features = {
 # Messages
 messages = {
     'success': {
-        'registration': 'Registration successful! Welcome to PrimeHomes.',
+        'registration': 'Registration successful! Welcome to EcoFinds.',
         'emailSent': 'Your message has been sent successfully.',
         'deletion': 'Item deleted successfully.'
     },

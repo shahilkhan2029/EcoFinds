@@ -3,133 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Rantel Real Estate Portal</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Sign Up | EcoFinds</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .auth-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .auth-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .auth-form h2 {
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .auth-form p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.1);
+            outline: none;
+        }
+
+        .form-group .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            color: #666;
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .submit-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .alert {
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            font-size: 15px;
+            display: none;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .terms-check {
+            margin: 20px 0;
+        }
+
+        .terms-check label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .terms-check input[type="checkbox"] {
+            width: auto;
+        }
+
+        .terms-check a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .terms-check a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+            }
+
+            .auth-form {
+                padding: 30px 20px;
+            }
+
+            .auth-form h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html">Rantel Real Estate</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="buy-property.html">Buy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="rent-property.html">Rent</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="agents.html">Agents</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services/home-loans.html">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
+        <div class="auth-form">
+            <h2>Join EcoFinds</h2>
+            <p>Create an account to start shopping sustainable products</p>
+
+            <div id="errorAlert" class="alert alert-danger"></div>
+
+            <form id="signupForm" onsubmit="return handleSignup(event)">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                    <i class="fas fa-envelope input-icon"></i>
+        </div>
+
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input type="password" id="password" name="password" required>
+                    <i class="fas fa-eye password-toggle input-icon" onclick="togglePassword()"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password *</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <i class="fas fa-eye password-toggle input-icon" onclick="toggleConfirmPassword()"></i>
+                </div>
+
+                <div class="terms-check">
+                    <label>
+                        <input type="checkbox" required>
+                        I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+
+            <div class="login-link">
+                Already have an account? <a href="login.html">Sign In</a>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <!-- Sign Up Section -->
-    <section class="py-5 mt-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card shadow">
-                        <div class="card-body p-5">
-                            <h2 class="text-center mb-4">Create an Account</h2>
-                            <div id="errorMessage" class="alert alert-danger d-none"></div>
-                            <form id="signupForm">
-                                <div class="mb-3">
-                                    <label for="fullName" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="fullName" name="fullName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                    <div class="form-text">Password must be at least 8 characters long and include a number and a special character.</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                                </div>
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="terms" required>
-                                    <label class="form-check-label" for="terms">
-                                        I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>
-                                    </label>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-                            </form>
-                            <div class="text-center mt-3">
-                                <p>Already have an account? <a href="login.html">Login</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const icon = document.querySelector('.password-toggle');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Rantel Real Estate</h5>
-                    <p>Your trusted partner in finding the perfect property.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="about.html" class="text-white">About Us</a></li>
-                        <li><a href="contact.html" class="text-white">Contact</a></li>
-                        <li><a href="privacy.html" class="text-white">Privacy Policy</a></li>
-                        <li><a href="terms.html" class="text-white">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contact Us</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-phone me-2"></i> +1 234 567 890</li>
-                        <li><i class="fas fa-envelope me-2"></i> info@rantel.com</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Real Estate St, City</li>
-                    </ul>
-                </div>
-            </div>
-            <hr>
-            <div class="text-center">
-                <p class="mb-0">&copy; 2024 Rantel Real Estate. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        function toggleConfirmPassword() {
+            const passwordInput = document.getElementById('confirmPassword');
+            const icon = document.querySelectorAll('.password-toggle')[1];
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="js/auth.js"></script>
-    <script src="js/main.js"></script>
+        function handleSignup(event) {
+            event.preventDefault();
+            const form = event.target;
+            const password = form.password.value;
+            const confirmPassword = form.confirmPassword.value;
+
+            if (password !== confirmPassword) {
+                const errorAlert = document.getElementById('errorAlert');
+                errorAlert.style.display = 'block';
+                errorAlert.textContent = 'Passwords do not match';
+                return false;
+            }
+
+            // Add your signup logic here
+            return false;
+        }
+    </script>
 </body>
 </html> 

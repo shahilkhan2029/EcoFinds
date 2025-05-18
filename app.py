@@ -97,10 +97,10 @@ def create_app():
         db.session.commit()
         
         msg = Message(
-            'Welcome to PrimeHomes',
+            'Welcome to EcoFinds',
             recipients=[user.email]
         )
-        msg.body = f"Welcome to PrimeHomes! We're excited to have you on board."
+        msg.body = f"Welcome to EcoFinds! We're excited to have you on board."
         mail.send(msg)
         
         return jsonify({'message': messages['success']['registration']}), 201

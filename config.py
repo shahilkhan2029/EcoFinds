@@ -9,7 +9,7 @@ db = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'user': os.getenv('DB_USER', 'root'),
     'password': os.getenv('DB_PASSWORD', ''),
-    'database': os.getenv('DB_NAME', 'primehomes')
+    'database': os.getenv('DB_NAME', 'ecofinds')
 }
 
 # Email configuration
@@ -21,12 +21,12 @@ email = {
         'user': os.getenv('SMTP_USER', ''),
         'pass': os.getenv('SMTP_PASS', '')
     },
-    'from': os.getenv('EMAIL_FROM', 'noreply@primehomes.com')
+    'from': os.getenv('EMAIL_FROM', 'noreply@ecofinds.com')
 }
 
 # Application configuration
 app = {
-    'name': 'PrimeHomes',
+    'name': 'EcoFinds',
     'version': '1.0.0',
     'debug': os.getenv('NODE_ENV', 'development') == 'development',
     'port': int(os.getenv('PORT', 3000)),
