@@ -326,6 +326,13 @@
             padding: 0 20px;
         }
 
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
         .property-card {
             background-color: white;
             border-radius: 10px;
@@ -342,6 +349,23 @@
         .property-image {
             height: 200px;
             overflow: hidden;
+            position: relative;
+        }
+
+        .property-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .property-card:hover .property-image::after {
+            opacity: 1;
         }
 
         .property-image img {
@@ -363,11 +387,20 @@
             font-size: 1.2rem;
             margin-bottom: 10px;
             color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .property-info h3 i {
+            color: var(--primary);
+            font-size: 1.4rem;
         }
 
         .property-info p {
             color: #666;
             margin-bottom: 15px;
+            min-height: 40px;
         }
 
         .property-price {
@@ -397,15 +430,17 @@
         .property-link {
             display: inline-block;
             padding: 8px 15px;
-            background-color: #007bff;
+            background-color: var(--primary);
             color: white;
             text-decoration: none;
             border-radius: 5px;
             transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
         }
 
         .property-link:hover {
-            background-color: #0056b3;
+            background-color: var(--secondary);
             transform: translateY(-2px);
         }
 
@@ -506,7 +541,7 @@
         <div class="main-header-content">
             <a href="index.html" class="logo">
                 <i class="fas fa-home"></i>
-                <h1>PrimeHomes</h1>
+                <h1>EcoFinds</h1>
             </a>
             <nav class="main-nav">
                 <a href="index.html" class="nav-link active">Home</a>
@@ -576,11 +611,11 @@
 
     <section class="featured-section">
         <div class="section-title">
-            <h2>Featured Properties</h2>
-            <p>Discover our handpicked selection of premium properties</p>
+            <h2>Browse Categories</h2>
+            <p>Explore our wide range of categories</p>
         </div>
-        <div class="properties-grid" id="featuredProperties">
-            <!-- Featured properties will be populated by JavaScript -->
+        <div class="categories-grid" id="categoriesGrid">
+            <!-- Categories will be populated by JavaScript -->
         </div>
     </section>
 
@@ -622,71 +657,49 @@
         // Mock data for locations
         const locations = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
 
-        // Mock data for featured properties
-        const featuredProperties = [
+        // Categories data
+        const categories = [
             {
                 id: 1,
-                title: 'Modern Apartment in Downtown',
-                location: 'New York',
-                price: 450000,
-                type: 'apartment',
-                bedrooms: 2,
-                bathrooms: 2,
-                area: 1200,
+                name: 'Apartments',
+                icon: 'building',
+                description: 'Find your perfect living space',
                 image: 'https://source.unsplash.com/random/800x600/?apartment'
             },
             {
                 id: 2,
-                title: 'Luxury Villa with Pool',
-                location: 'Los Angeles',
-                price: 1200000,
-                type: 'villa',
-                bedrooms: 4,
-                bathrooms: 3,
-                area: 3000,
-                image: 'https://source.unsplash.com/random/800x600/?villa'
+                name: 'Vehicles',
+                icon: 'car',
+                description: 'Browse cars, bikes, and more',
+                image: 'https://source.unsplash.com/random/800x600/?car'
             },
             {
                 id: 3,
-                title: 'Cozy Family House',
-                location: 'Chicago',
-                price: 350000,
-                type: 'house',
-                bedrooms: 3,
-                bathrooms: 2,
-                area: 1800,
-                image: 'https://source.unsplash.com/random/800x600/?house'
+                name: 'Electronics',
+                icon: 'laptop',
+                description: 'Latest gadgets and devices',
+                image: 'https://source.unsplash.com/random/800x600/?electronics'
             },
             {
                 id: 4,
-                title: 'Commercial Space for Rent',
-                location: 'Houston',
-                price: 2500,
-                type: 'commercial',
-                area: 2000,
-                image: 'https://source.unsplash.com/random/800x600/?office'
+                name: 'Books',
+                icon: 'book',
+                description: 'Explore our collection of books',
+                image: 'https://source.unsplash.com/random/800x600/?books'
             },
             {
                 id: 5,
-                title: 'Penthouse with City View',
-                location: 'Phoenix',
-                price: 850000,
-                type: 'apartment',
-                bedrooms: 3,
-                bathrooms: 2,
-                area: 2000,
-                image: 'https://source.unsplash.com/random/800x600/?penthouse'
+                name: 'Fashion',
+                icon: 'tshirt',
+                description: 'Trendy clothing and accessories',
+                image: 'https://source.unsplash.com/random/800x600/?fashion'
             },
             {
                 id: 6,
-                title: 'Suburban Family Home',
-                location: 'Philadelphia',
-                price: 420000,
-                type: 'house',
-                bedrooms: 4,
-                bathrooms: 3,
-                area: 2200,
-                image: 'https://source.unsplash.com/random/800x600/?suburban'
+                name: 'Home & Garden',
+                icon: 'home',
+                description: 'Everything for your home',
+                image: 'https://source.unsplash.com/random/800x600/?home'
             }
         ];
 
@@ -699,28 +712,22 @@
             locationSelect.appendChild(option);
         });
 
-        // Populate featured properties
-        const featuredPropertiesContainer = document.getElementById('featuredProperties');
-        featuredProperties.forEach(property => {
-            const propertyCard = document.createElement('div');
-            propertyCard.className = 'property-card';
-            propertyCard.innerHTML = `
+        // Populate categories
+        const categoriesContainer = document.getElementById('categoriesGrid');
+        categories.forEach(category => {
+            const categoryCard = document.createElement('div');
+            categoryCard.className = 'property-card';
+            categoryCard.innerHTML = `
                 <div class="property-image">
-                    <img src="${property.image}" alt="${property.title}">
+                    <img src="${category.image}" alt="${category.name}">
                 </div>
                 <div class="property-info">
-                    <h3>${property.title}</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
-                    <div class="property-price">$${property.price.toLocaleString()}</div>
-                    <div class="property-features">
-                        ${property.bedrooms ? `<span class="feature"><i class="fas fa-bed"></i> ${property.bedrooms} Beds</span>` : ''}
-                        ${property.bathrooms ? `<span class="feature"><i class="fas fa-bath"></i> ${property.bathrooms} Baths</span>` : ''}
-                        <span class="feature"><i class="fas fa-ruler-combined"></i> ${property.area} sq ft</span>
-                    </div>
-                    <a href="property-details.html?id=${property.id}" class="property-link">View Details</a>
+                    <h3><i class="fas fa-${category.icon}"></i> ${category.name}</h3>
+                    <p>${category.description}</p>
+                    <a href="category.html?id=${category.id}&name=${encodeURIComponent(category.name)}" class="property-link">Browse ${category.name}</a>
                 </div>
             `;
-            featuredPropertiesContainer.appendChild(propertyCard);
+            categoriesContainer.appendChild(categoryCard);
         });
 
         // Handle search form submission

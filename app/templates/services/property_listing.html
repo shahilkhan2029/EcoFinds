@@ -1,0 +1,166 @@
+{% extends "services/base.html" %}
+
+{% block service_title %}{% block listing_title %}{% endblock %}{% endblock %}
+
+{% block service_content %}
+<form id="propertyForm" class="needs-validation" novalidate enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="title" class="form-label">Property Title</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+        <div class="invalid-feedback">Please enter a property title.</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        <div class="invalid-feedback">Please provide a property description.</div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" id="price" name="price" required min="0">
+                </div>
+                <div class="invalid-feedback">Please enter a valid price.</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="area" class="form-label">Area (sq ft)</label>
+                <input type="number" class="form-control" id="area" name="area" required min="100">
+                <div class="invalid-feedback">Please enter a valid area.</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="bedrooms" class="form-label">Bedrooms</label>
+                <input type="number" class="form-control" id="bedrooms" name="bedrooms" required min="0">
+                <div class="invalid-feedback">Please enter the number of bedrooms.</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="bathrooms" class="form-label">Bathrooms</label>
+                <input type="number" class="form-control" id="bathrooms" name="bathrooms" required min="0">
+                <div class="invalid-feedback">Please enter the number of bathrooms.</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input type="text" class="form-control" id="address" name="address" required>
+        <div class="invalid-feedback">Please enter the property address.</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="category_id" class="form-label">Category</label>
+        <select class="form-select" id="category_id" name="category_id" required>
+            <option value="">Select category</option>
+            {% if categories %}
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        <div class="invalid-feedback">Please select a category.</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="images" class="form-label">Property Images</label>
+        <input type="file" class="form-control" id="images" name="images" multiple accept="image/*" required>
+        <div class="invalid-feedback">Please upload at least one image.</div>
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label">Features</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="features" value="parking" id="parking">
+            <label class="form-check-label" for="parking">Parking</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="features" value="garden" id="garden">
+            <label class="form-check-label" for="garden">Garden</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="features" value="pool" id="pool">
+            <label class="form-check-label" for="pool">Swimming Pool</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="features" value="security" id="security">
+            <label class="form-check-label" for="security">Security System</label>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">List Property</button>
+    </div>
+</form>
+
+<div id="result" class="mt-4" style="display: none;">
+    <div class="alert alert-success">
+        <h4 class="alert-heading">Property Listed Successfully!</h4>
+        <p class="mb-0">Your property has been listed and is now visible to potential {% block listing_type %}{% endblock %}.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block service_scripts %}
+<script>
+document.getElementById('propertyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (!this.checkValidity()) {
+        e.stopPropagation();
+        this.classList.add('was-validated');
+        return;
+    }
+    
+    const formData = new FormData(this);
+    const features = Array.from(formData.getAll('features'));
+    
+    // Create a new FormData object for the file upload
+    const uploadData = new FormData();
+    uploadData.append('title', formData.get('title'));
+    uploadData.append('description', formData.get('description'));
+    uploadData.append('price', formData.get('price'));
+    uploadData.append('area', formData.get('area'));
+    uploadData.append('bedrooms', formData.get('bedrooms'));
+    uploadData.append('bathrooms', formData.get('bathrooms'));
+    uploadData.append('address', formData.get('address'));
+    uploadData.append('category_id', formData.get('category_id'));
+    uploadData.append('features', JSON.stringify(features));
+    
+    // Append all selected files
+    const imageFiles = document.getElementById('images').files;
+    for (let i = 0; i < imageFiles.length; i++) {
+        uploadData.append('images', imageFiles[i]);
+    }
+    
+    try {
+        const response = await fetch('{% block listing_endpoint %}{% endblock %}', {
+            method: 'POST',
+            body: uploadData
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('result').style.display = 'block';
+            this.reset();
+        } else {
+            alert(data.error || 'An error occurred while listing the property.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while listing the property.');
+    }
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,91 @@
+{% extends "services/base.html" %}
+
+{% block service_title %}Legal Services{% endblock %}
+
+{% block service_content %}
+<form id="legalServiceForm" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="service_type" class="form-label">Service Type</label>
+        <select class="form-select" id="service_type" name="service_type" required>
+            <option value="">Select service type</option>
+            <option value="property_transfer">Property Transfer</option>
+            <option value="title_verification">Title Verification</option>
+            <option value="contract_review">Contract Review</option>
+            <option value="legal_consultation">Legal Consultation</option>
+        </select>
+        <div class="invalid-feedback">Please select a service type.</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="property_id" class="form-label">Property (if applicable)</label>
+        <select class="form-select" id="property_id" name="property_id">
+            <option value="">Select property</option>
+            {% if properties %}
+                {% for property in properties %}
+                    <option value="{{ property.id }}">{{ property.title }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="details" class="form-label">Additional Details</label>
+        <textarea class="form-control" id="details" name="details" rows="4" required></textarea>
+        <div class="invalid-feedback">Please provide additional details about your request.</div>
+    </div>
+    
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+    </div>
+</form>
+
+<div id="result" class="mt-4" style="display: none;">
+    <div class="alert alert-success">
+        <h4 class="alert-heading">Request Submitted Successfully!</h4>
+        <p class="mb-0">We will review your request and get back to you shortly.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block service_scripts %}
+<script>
+document.getElementById('legalServiceForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (!this.checkValidity()) {
+        e.stopPropagation();
+        this.classList.add('was-validated');
+        return;
+    }
+    
+    const formData = new FormData(this);
+    const propertyId = formData.get('property_id');
+    
+    try {
+        const response = await fetch('/services/legal-services', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                service_type: formData.get('service_type'),
+                property_id: propertyId || null,
+                details: formData.get('details')
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('result').style.display = 'block';
+            this.reset();
+        } else {
+            alert(data.error || 'An error occurred while submitting your request.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while submitting your request.');
+    }
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,114 @@
+{% extends "services/base.html" %}
+
+{% block service_title %}Property Valuation{% endblock %}
+
+{% block service_content %}
+<form id="valuationForm" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="area" class="form-label">Property Area (sq ft)</label>
+        <input type="number" class="form-control" id="area" name="area" required min="100">
+        <div class="invalid-feedback">Please enter a valid area.</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="location_type" class="form-label">Location Type</label>
+        <select class="form-select" id="location_type" name="location_type" required>
+            <option value="">Select location type</option>
+            <option value="prime">Prime Location</option>
+            <option value="good">Good Location</option>
+            <option value="average">Average Location</option>
+        </select>
+        <div class="invalid-feedback">Please select a location type.</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="condition" class="form-label">Property Condition</label>
+        <select class="form-select" id="condition" name="condition" required>
+            <option value="">Select condition</option>
+            <option value="excellent">Excellent</option>
+            <option value="good">Good</option>
+            <option value="average">Average</option>
+            <option value="needs_renovation">Needs Renovation</option>
+        </select>
+        <div class="invalid-feedback">Please select a condition.</div>
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label">Amenities</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="amenities" value="parking" id="parking">
+            <label class="form-check-label" for="parking">Parking</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="amenities" value="garden" id="garden">
+            <label class="form-check-label" for="garden">Garden</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="amenities" value="pool" id="pool">
+            <label class="form-check-label" for="pool">Swimming Pool</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="amenities" value="security" id="security">
+            <label class="form-check-label" for="security">Security System</label>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Calculate Value</button>
+    </div>
+</form>
+
+<div id="result" class="mt-4" style="display: none;">
+    <div class="alert alert-info">
+        <h4 class="alert-heading">Estimated Property Value</h4>
+        <p class="mb-0">Your property is estimated to be worth: <strong id="estimatedValue"></strong></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block service_scripts %}
+<script>
+document.getElementById('valuationForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (!this.checkValidity()) {
+        e.stopPropagation();
+        this.classList.add('was-validated');
+        return;
+    }
+    
+    const formData = new FormData(this);
+    const amenities = Array.from(formData.getAll('amenities'));
+    
+    try {
+        const response = await fetch('/services/property-valuation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                area: formData.get('area'),
+                location_type: formData.get('location_type'),
+                condition: formData.get('condition'),
+                amenities: amenities
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('estimatedValue').textContent = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(data.estimated_value);
+            document.getElementById('result').style.display = 'block';
+        } else {
+            alert(data.error || 'An error occurred while calculating the value.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while calculating the value.');
+    }
+});
+</script>
+{% endblock %} 

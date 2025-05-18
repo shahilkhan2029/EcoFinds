@@ -16,6 +16,7 @@ from app.routes.property import property_bp
 from app.routes.contact import contact_bp
 from app.routes.agent import agent_bp
 from app.config.settings import config
+from app.models.category import Category
 
 def create_app():
     app = Flask(__name__, static_folder='public')
@@ -314,8 +315,69 @@ def create_app():
     
     return app
 
+def init_categories(app):
+    with app.app_context():
+        # Ensure all tables are created
+        db.create_all()
+        
+        # Check if categories exist
+        if Category.query.count() == 0:
+            categories = [
+                {
+                    'name': 'Apartments',
+                    'description': 'Find your perfect apartment',
+                    'icon': 'fas fa-building'
+                },
+                {
+                    'name': 'Vehicles',
+                    'description': 'Browse cars, bikes, and other vehicles',
+                    'icon': 'fas fa-car'
+                },
+                {
+                    'name': 'Books',
+                    'description': 'Discover books and literature',
+                    'icon': 'fas fa-book'
+                },
+                {
+                    'name': 'Electronics',
+                    'description': 'Latest gadgets and electronics',
+                    'icon': 'fas fa-laptop'
+                },
+                {
+                    'name': 'Furniture',
+                    'description': 'Home and office furniture',
+                    'icon': 'fas fa-couch'
+                },
+                {
+                    'name': 'Clothing',
+                    'description': 'Fashion and apparel',
+                    'icon': 'fas fa-tshirt'
+                }
+            ]
+            
+            for category_data in categories:
+                category = Category(**category_data)
+                db.session.add(category)
+            
+            try:
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print(f"Error adding categories: {str(e)}")
+                raise
+
 if __name__ == '__main__':
+    # Create the Flask application
     app = create_app()
+    
+    # Initialize categories
+    try:
+        init_categories(app)
+        print("Categories initialized successfully!")
+    except Exception as e:
+        print(f"Error initializing categories: {str(e)}")
+    
+    # Run the application
     app.run(
         debug=app_config['debug'],
         port=app_config['port']

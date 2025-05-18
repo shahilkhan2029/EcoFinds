@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category - PrimeHomes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reuse existing styles from index.html */
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background-color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #2c3e50;
+        }
+
+        .logo i {
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF6B6B;
+        }
+
+        /* Category Header */
+        .category-header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://source.unsplash.com/random/1920x400/?shopping') no-repeat center center/cover;
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .category-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .category-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .product-rating {
+            color: #ffc107;
+        }
+
+        .buy-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .buy-button:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Filters */
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .filter-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .category-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-home"></i>
+                <h1>PrimeHomes</h1>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="buy-property.html" class="nav-link">Buy</a>
+                <a href="rent-property.html" class="nav-link">Rent</a>
+                <a href="agents.html" class="nav-link">Agents</a>
+                <a href="services/home-loans.html" class="nav-link">Services</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="auth-btn login">Login</a>
+                <a href="signup.html" class="auth-btn signup">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="category-header">
+        <h1 id="categoryTitle">Loading...</h1>
+        <p id="categoryDescription">Loading category description...</p>
+    </div>
+
+    <div class="container">
+        <div class="filters">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="sortBy">Sort By</label>
+                    <select id="sortBy">
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                        <option value="rating">Rating</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="priceRange">Price Range</label>
+                    <select id="priceRange">
+                        <option value="">All Prices</option>
+                        <option value="0-100">$0 - $100</option>
+                        <option value="100-500">$100 - $500</option>
+                        <option value="500-1000">$500 - $1000</option>
+                        <option value="1000+">$1000+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="condition">Condition</label>
+                    <select id="condition">
+                        <option value="">All Conditions</option>
+                        <option value="new">New</option>
+                        <option value="like_new">Like New</option>
+                        <option value="good">Good</option>
+                        <option value="fair">Fair</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Demo products data
+        const demoProducts = {
+            apartments: [
+                {
+                    id: 1,
+                    title: "Luxury Studio Apartment",
+                    price: 1200,
+                    description: "Modern studio apartment in downtown area",
+                    image: "https://source.unsplash.com/random/800x600/?apartment",
+                    rating: 4.5,
+                    condition: "new",
+                    location: "Downtown"
+                },
+                {
+                    id: 2,
+                    title: "2-Bedroom Apartment",
+                    price: 1800,
+                    description: "Spacious apartment with city views",
+                    image: "https://source.unsplash.com/random/800x600/?apartment-interior",
+                    rating: 4.8,
+                    condition: "like_new",
+                    location: "Uptown"
+                }
+            ],
+            vehicles: [
+                {
+                    id: 1,
+                    title: "2023 Toyota Camry",
+                    price: 25000,
+                    description: "Excellent condition, low mileage",
+                    image: "https://source.unsplash.com/random/800x600/?car",
+                    rating: 4.7,
+                    condition: "new",
+                    mileage: "5000"
+                },
+                {
+                    id: 2,
+                    title: "Honda Civic 2022",
+                    price: 22000,
+                    description: "Well maintained, one owner",
+                    image: "https://source.unsplash.com/random/800x600/?honda-civic",
+                    rating: 4.6,
+                    condition: "like_new",
+                    mileage: "15000"
+                }
+            ],
+            electronics: [
+                {
+                    id: 1,
+                    title: "iPhone 14 Pro",
+                    price: 999,
+                    description: "Latest model, 256GB storage",
+                    image: "https://source.unsplash.com/random/800x600/?iphone",
+                    rating: 4.9,
+                    condition: "new",
+                    brand: "Apple"
+                },
+                {
+                    id: 2,
+                    title: "Samsung 4K TV",
+                    price: 799,
+                    description: "55-inch Smart TV with HDR",
+                    image: "https://source.unsplash.com/random/800x600/?tv",
+                    rating: 4.7,
+                    condition: "new",
+                    brand: "Samsung"
+                }
+            ],
+            books: [
+                {
+                    id: 1,
+                    title: "The Great Gatsby",
+                    price: 15,
+                    description: "Classic novel by F. Scott Fitzgerald",
+                    image: "https://source.unsplash.com/random/800x600/?book",
+                    rating: 4.8,
+                    condition: "like_new",
+                    author: "F. Scott Fitzgerald"
+                },
+                {
+                    id: 2,
+                    title: "To Kill a Mockingbird",
+                    price: 12,
+                    description: "Harper Lee's masterpiece",
+                    image: "https://source.unsplash.com/random/800x600/?book-cover",
+                    rating: 4.9,
+                    condition: "good",
+                    author: "Harper Lee"
+                }
+            ],
+            fashion: [
+                {
+                    id: 1,
+                    title: "Designer Handbag",
+                    price: 299,
+                    description: "Luxury leather handbag",
+                    image: "https://source.unsplash.com/random/800x600/?handbag",
+                    rating: 4.6,
+                    condition: "new",
+                    brand: "Gucci"
+                },
+                {
+                    id: 2,
+                    title: "Men's Watch",
+                    price: 199,
+                    description: "Classic stainless steel watch",
+                    image: "https://source.unsplash.com/random/800x600/?watch",
+                    rating: 4.5,
+                    condition: "new",
+                    brand: "Fossil"
+                }
+            ],
+            "home-garden": [
+                {
+                    id: 1,
+                    title: "Modern Sofa Set",
+                    price: 899,
+                    description: "3-piece living room set",
+                    image: "https://source.unsplash.com/random/800x600/?sofa",
+                    rating: 4.7,
+                    condition: "new",
+                    material: "Leather"
+                },
+                {
+                    id: 2,
+                    title: "Garden Furniture Set",
+                    price: 499,
+                    description: "Outdoor patio furniture",
+                    image: "https://source.unsplash.com/random/800x600/?garden-furniture",
+                    rating: 4.4,
+                    condition: "new",
+                    material: "Rattan"
+                }
+            ]
+        };
+
+        // Get category from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryId = urlParams.get('id');
+        const categoryName = urlParams.get('name');
+
+        // Update category header
+        document.getElementById('categoryTitle').textContent = categoryName;
+        document.getElementById('categoryDescription').textContent = `Browse our collection of ${categoryName.toLowerCase()}`;
+
+        // Get products for the selected category
+        const categoryKey = categoryName.toLowerCase().replace(' & ', '-');
+        const products = demoProducts[categoryKey] || [];
+
+        // Populate products grid
+        const productsGrid = document.getElementById('productsGrid');
+        products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.title}">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">${product.title}</h3>
+                    <div class="product-price">$${product.price.toLocaleString()}</div>
+                    <p class="product-description">${product.description}</p>
+                    <div class="product-meta">
+                        <span class="product-rating">
+                            ${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 ? '½' : ''} (${product.rating})
+                        </span>
+                        <span class="product-condition">${product.condition.replace('_', ' ')}</span>
+                    </div>
+                    <a href="#" class="buy-button">Buy Now</a>
+                </div>
+            `;
+            productsGrid.appendChild(productCard);
+        });
+
+        // Handle filters
+        document.getElementById('sortBy').addEventListener('change', function(e) {
+            const value = e.target.value;
+            const sortedProducts = [...products].sort((a, b) => {
+                switch(value) {
+                    case 'price_asc':
+                        return a.price - b.price;
+                    case 'price_desc':
+                        return b.price - a.price;
+                    case 'rating':
+                        return b.rating - a.rating;
+                    default:
+                        return 0;
+                }
+            });
+            updateProductsGrid(sortedProducts);
+        });
+
+        function updateProductsGrid(products) {
+            productsGrid.innerHTML = '';
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.title}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-price">$${product.price.toLocaleString()}</div>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-meta">
+                            <span class="product-rating">
+                                ${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 ? '½' : ''} (${product.rating})
+                            </span>
+                            <span class="product-condition">${product.condition.replace('_', ' ')}</span>
+                        </div>
+                        <a href="#" class="buy-button">Buy Now</a>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+    </script>
+</body>
+</html> 

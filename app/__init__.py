@@ -42,11 +42,13 @@ def create_app():
     from app.routes.property import property_bp
     from app.routes.contact import contact_bp
     from app.routes.agent import agent_bp
+    from app.routes.category import category_bp
     
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(property_bp, url_prefix='/api')
     app.register_blueprint(contact_bp, url_prefix='/api')
     app.register_blueprint(agent_bp, url_prefix='/api')
+    app.register_blueprint(category_bp, url_prefix='/api')
     
     # Create database tables
     with app.app_context():

@@ -1,25 +1,25 @@
 from datetime import datetime
 from app.extensions import db
 
-class User(db.Model):
-    __tablename__ = 'users'
+class Category(db.Model):
+    __tablename__ = 'categories'
     
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.String(20), default='user')
+    name = db.Column(db.String(100), nullable=False, unique=True)
+    description = db.Column(db.Text)
+    icon = db.Column(db.String(50))  # For storing icon class names (e.g., 'fas fa-home')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    # Relationships
-    agent = db.relationship('Agent', backref='user', uselist=False, lazy=True)
-    properties = db.relationship('Property', backref='owner', lazy=True)
+    # Relationship with Property model
+    properties = db.relationship('Property', backref='category', lazy=True)
     
     def to_dict(self):
         return {
             'id': self.id,
-            'email': self.email,
-            'role': self.role,
+            'name': self.name,
+            'description': self.description,
+            'icon': self.icon,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         } 
