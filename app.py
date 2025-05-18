@@ -11,6 +11,11 @@ from logging.handlers import RotatingFileHandler
 from config import db as db_config, email, app as app_config, upload, api, logging as logging_config, messages, features
 from extensions import db, mail, jwt, cors
 from models import User, Property, Agent, ContactMessage
+from app.routes.auth import auth_bp
+from app.routes.property import property_bp
+from app.routes.contact import contact_bp
+from app.routes.agent import agent_bp
+from app.config.settings import config
 
 def create_app():
     app = Flask(__name__, static_folder='public')
@@ -49,6 +54,12 @@ def create_app():
             "allow_headers": api['cors']['allow_headers']
         }
     })
+    
+    # Register blueprints
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    app.register_blueprint(property_bp, url_prefix='/api')
+    app.register_blueprint(contact_bp, url_prefix='/api')
+    app.register_blueprint(agent_bp, url_prefix='/api')
     
     with app.app_context():
         try:
@@ -303,9 +314,8 @@ def create_app():
     
     return app
 
-app = create_app()
-
 if __name__ == '__main__':
+    app = create_app()
     app.run(
         debug=app_config['debug'],
         port=app_config['port']

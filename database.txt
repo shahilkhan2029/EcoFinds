@@ -1,0 +1,77 @@
+🏢 Apartments
+1. 2BHK Apartment in Downtown Manhattan
+Price: $5,386/month
+Location: New York, NY
+Description: Spacious 2-bedroom apartment with modern amenities, close to subway.
+Image: https://images1.apartments.com/i2/Qv9tYXHR3GyvkzkgdnktCOU3lqkphvwoUZU2F2Vo0Sc/117/10-hanover-square-new-york-ny-building-photo.jpg?p=0
+
+2. Studio Apartment in Los Angeles
+Price: $3,206/month
+Location: Los Angeles, CA
+Description: Cozy studio with modern amenities and free parking.
+Image: https://images1.apartments.com/i2/1zpSWQwDVnd-mQZVCUuBqDtPT_U2fB6EcHMIhsBqGus/117/blake-lofts-los-angeles-ca-building-photo.jpg?p=0
+
+3. 3BHK Luxury Apartment in San Francisco
+Price: $6,717/month
+Location: San Francisco, CA
+Description: Fully furnished, sea view, 24/7 security.
+Image: https://cdn.vox-cdn.com/thumbor/XOwdYuNlFHl_a00jIxssdrRbzHE=/0x0:1024x683/1120x0/filters:focal(0x0:1024x683):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/10175081/IS27688lnhxi7e1000000000.jpg
+
+🚗 Vehicles
+1. Hyundai Elantra Hybrid
+Price: $25,000
+Location: Chicago, IL
+Description: Brand new hybrid with excellent fuel efficiency.
+Image: https://s7d1.scene7.com/is/image/hyundai/2022-elantra-hev?wid=1200&hei=630&qlt=85,0&fmt=webp
+
+2. Toyota 4Runner
+Price: $35,000
+Location: Chicago, IL
+Description: Reliable SUV with off-road capabilities.
+Image: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/2019_Toyota_4Runner_SR5_4.0L_front_6.16.19.jpg/960px-2019_Toyota_4Runner_SR5_4.0L_front_6.16.19.jpg
+
+3. Subaru BRZ
+Price: $30,000
+Location: Chicago, IL
+Description: Sporty coupe with manual transmission.
+Image: https://hips.hearstapps.com/hmg-prod/images/2024-subaru-brz-ts-lightning-lap-2025-760-67ae42c0bb0e8.jpg?crop=0.643xw:0.543xh;0.247xw,0.356xh&resize=1200:*
+
+💻 Electronics
+
+1. Apple MacBook Pro
+Price: $950
+Location: San Francisco, CA
+Description: 13-inch, M1 chip, 256GB SSD, lightly used.
+Image:  https://www.apple.com/newsroom/images/product/mac/standard/Apple_MacBook-Pro_14-16-inch_10182021_big.jpg.slideshow-large_2x.jpg
+
+2. Samsung 55" Smart TV
+Price: $400
+Location: San Francisco, CA
+Description: 4K Ultra HD, great for streaming, comes with remote.
+Image: https://www.samsung.com/in/tvs/uhd-4k-tv/du7660-55-inch-crystal-uhd-4k-tizen-os-smart-tv-ua55du7660klxl/
+
+3. 
+Sony WH-1000XM4 Headphones
+Price: $250
+Location: San Francisco, CA
+Description: Noise cancelling, Bluetooth, excellent sound quality.
+Image: https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT940kSXDlCVJ2pMz7KeFkKRdlB_ras23uZ_xre-mYIwMx9PSbQpI0W2vWkOBLO6CCV7OFBz8bDDFuKpWsmZhYb4IiAavVri43_GJTW43gJWipmz9Ncxx-8gw
+
+📚 Books
+1. Atomic Habits by James Clear
+Price: $10
+Location: Boston, MA
+Description: Paperback edition, good condition.
+Image:  https://cultivatewhatmatters.com/cdn/shop/articles/atomic-habits.jpg?v=1624827508
+
+2. Introduction to Algorithms (CLRS)
+Price: $30
+Location: Boston, MA
+Description: Hardcover, slightly used for one semester.
+Image:   https://rukminim2.flixcart.com/image/850/1000/kkcwo7k0/book/k/n/b/introduction-to-algorithms-original-imafzpgdpkm33t9s.jpeg?q=90&crop=false
+
+3. The Alchemist by Paulo Coelho 
+Price: $7
+Location: Boston, MA
+Description: Inspirational novel, well-kept pages.
+Image:  https://m.media-amazon.com/images/I/81FPzmB5fgL.jpg
