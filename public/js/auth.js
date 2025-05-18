@@ -162,4 +162,135 @@ class Auth {
 }
 
 // Initialize authentication
-const auth = new Auth(); 
+const auth = new Auth();
+
+// Function to check if user is logged in
+function isLoggedIn() {
+    return localStorage.getItem('currentUser') !== null;
+}
+
+// Function to get current user
+function getCurrentUser() {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
+}
+
+// Function to update navbar based on auth state
+function updateNavbar() {
+    const authButtons = document.getElementById('authButtons');
+    if (!authButtons) return;
+
+    if (isLoggedIn()) {
+        const user = getCurrentUser();
+        authButtons.innerHTML = `
+            <div class="user-menu">
+                <span class="user-name">Welcome, ${user.name}</span>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+        `;
+    } else {
+        authButtons.innerHTML = `
+            <a href="/pages/auth/login.html" class="login-btn">Login</a>
+            <a href="/pages/auth/signup.html" class="signup-btn">Sign Up</a>
+        `;
+    }
+}
+
+// Function to handle logout
+function logout() {
+    localStorage.removeItem('currentUser');
+    updateNavbar();
+    window.location.href = '/';
+}
+
+// Function to handle signup
+function handleSignup(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Passwords do not match';
+        return;
+    }
+
+    // Get existing users
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    
+    // Check if email already exists
+    if (users.some(user => user.email === email)) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Email already registered';
+        return;
+    }
+
+    // Create new user
+    const newUser = {
+        id: Date.now(),
+        name,
+        email,
+        password,
+        createdAt: new Date().toISOString()
+    };
+
+    // Add to users array
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    // Show success message
+    alert('Registration successful! Please login to continue.');
+    
+    // Redirect to login page
+    window.location.href = 'login.html';
+}
+
+// Function to handle login
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Get users from localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    
+    // Find user
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if (user) {
+        // Store logged in user
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        
+        // Show success message
+        alert('Login successful!');
+        
+        // Redirect to home page
+        window.location.href = '/';
+    } else {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Invalid email or password';
+    }
+}
+
+// Update navbar when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    updateNavbar();
+
+    // Add event listeners for forms if they exist
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.addEventListener('submit', handleSignup);
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+}); 

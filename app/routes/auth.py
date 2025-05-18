@@ -10,31 +10,29 @@ auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    if not features['enableRegistration']:
-        return jsonify({'error': messages['errors']['unauthorized']}), 403
-
     data = request.get_json()
     
+    # Check if user already exists
     if User.query.filter_by(email=data['email']).first():
-        return jsonify({'error': messages['errors']['emailExists']}), 400
+        return jsonify({'error': 'Email already registered'}), 400
     
-    user = User(
+    # Create new user
+    new_user = User(
+        name=data['name'],
         email=data['email'],
-        password=generate_password_hash(data['password']),
-        role='user'
+        password=generate_password_hash(data['password'])
     )
     
-    db.session.add(user)
-    db.session.commit()
-    
-    msg = Message(
-        'Welcome to EcoFinds',
-        recipients=[user.email]
-    )
-    msg.body = f"Welcome to EcoFinds! We're excited to have you on board."
-    mail.send(msg)
-    
-    return jsonify({'message': messages['success']['registration']}), 201
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({
+            'message': 'Registration successful',
+            'user': new_user.to_dict()
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Registration failed'}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -42,7 +40,9 @@ def login():
     user = User.query.filter_by(email=data['email']).first()
     
     if user and check_password_hash(user.password, data['password']):
-        access_token = create_access_token(identity=user.id)
-        return jsonify({'access_token': access_token}), 200
+        return jsonify({
+            'message': 'Login successful',
+            'user': user.to_dict()
+        }), 200
     
-    return jsonify({'error': messages['errors']['invalidCredentials']}), 401 
+    return jsonify({'error': 'Invalid email or password'}), 401 

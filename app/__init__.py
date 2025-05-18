@@ -4,6 +4,11 @@ from app.config.settings import Config, db as db_config, email, app as app_confi
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app():
     app = Flask(__name__, static_folder='public')
@@ -27,6 +32,7 @@ def create_app():
     
     # Initialize extensions
     db.init_app(app)
+    migrate.init_app(app, db)
     mail.init_app(app)
     jwt.init_app(app)
     cors.init_app(app, resources={
@@ -39,16 +45,14 @@ def create_app():
     
     # Register blueprints
     from app.routes.auth import auth_bp
-    from app.routes.property import property_bp
-    from app.routes.contact import contact_bp
-    from app.routes.agent import agent_bp
-    from app.routes.category import category_bp
+    from app.routes.product import product_bp
+    from app.routes.cart import cart_bp
+    from app.routes.order import order_bp
     
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
-    app.register_blueprint(property_bp, url_prefix='/api')
-    app.register_blueprint(contact_bp, url_prefix='/api')
-    app.register_blueprint(agent_bp, url_prefix='/api')
-    app.register_blueprint(category_bp, url_prefix='/api')
+    app.register_blueprint(product_bp, url_prefix='/api')
+    app.register_blueprint(cart_bp, url_prefix='/api')
+    app.register_blueprint(order_bp, url_prefix='/api')
     
     # Create database tables
     with app.app_context():
