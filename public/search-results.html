@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results | PrimeHomes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .search-results {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .search-summary {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-summary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-summary h2 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .search-filters {
+            color: #666;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .filter-tag {
+            background: var(--light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .filter-tag i {
+            color: var(--primary);
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover .property-image {
+            transform: scale(1.05);
+        }
+
+        .property-info {
+            padding: 20px;
+        }
+
+        .property-title {
+            font-size: 18px;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .property-location {
+            color: #666;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .property-location i {
+            color: var(--primary);
+        }
+
+        .property-price {
+            font-size: 22px;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .property-details {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .detail-item i {
+            color: var(--primary);
+        }
+
+        .view-details-btn {
+            display: block;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .view-details-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .no-results i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .no-results p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .retry-search {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .retry-search:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .loading i {
+            font-size: 40px;
+            color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .search-results {
+                margin: 20px auto;
+            }
+
+            .search-summary {
+                padding: 20px;
+            }
+
+            .search-summary h2 {
+                font-size: 24px;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-results">
+            <div class="search-summary">
+                <h2>Search Results</h2>
+                <div class="search-filters" id="searchFilters">
+                    <!-- Search filters will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner"></i>
+            </div>
+
+            <div class="properties-grid" id="propertiesGrid">
+                <!-- Properties will be populated by JavaScript -->
+            </div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No properties found matching your criteria</h3>
+                <p>Try adjusting your search filters to see more results</p>
+                <a href="index.html" class="retry-search">Modify Search</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to show loading state
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('propertiesGrid').style.display = 'none';
+            document.getElementById('noResults').style.display = 'none';
+        }
+
+        // Function to hide loading state
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Function to display search filters
+        function displaySearchFilters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const filters = document.getElementById('searchFilters');
+            filters.innerHTML = '';
+
+            const searchParams = {
+                location: urlParams.get('location'),
+                want_to: urlParams.get('want_to'),
+                property_type: urlParams.get('property_type'),
+                price_range: urlParams.get('price_range')
+            };
+
+            for (const [key, value] of Object.entries(searchParams)) {
+                if (value) {
+                    const filterTag = document.createElement('div');
+                    filterTag.className = 'filter-tag';
+                    
+                    let icon, label;
+                    switch(key) {
+                        case 'location':
+                            icon = 'fa-map-marker-alt';
+                            label = `Location: ${value}`;
+                            break;
+                        case 'want_to':
+                            icon = 'fa-tag';
+                            label = `Purpose: ${value.charAt(0).toUpperCase() + value.slice(1)}`;
+                            break;
+                        case 'property_type':
+                            icon = 'fa-home';
+                            label = `Type: ${value.charAt(0).toUpperCase() + value.slice(1)}`;
+                            break;
+                        case 'price_range':
+                            icon = 'fa-dollar-sign';
+                            label = `Price: ${value}`;
+                            break;
+                    }
+
+                    filterTag.innerHTML = `
+                        <i class="fas ${icon}"></i>
+                        <span>${label}</span>
+                    `;
+                    filters.appendChild(filterTag);
+                }
+            }
+        }
+
+        // Function to display properties
+        async function displayProperties() {
+            showLoading();
+            const urlParams = new URLSearchParams(window.location.search);
+            const propertiesGrid = document.getElementById('propertiesGrid');
+            const noResults = document.getElementById('noResults');
+
+            try {
+                // Here you would typically make an API call to your backend
+                // For now, we'll use mock data
+                const properties = await simulatePropertySearch(urlParams);
+                
+                if (properties.length === 0) {
+                    propertiesGrid.style.display = 'none';
+                    noResults.style.display = 'block';
+                } else {
+                    propertiesGrid.style.display = 'grid';
+                    noResults.style.display = 'none';
+                    propertiesGrid.innerHTML = '';
+
+                    properties.forEach(property => {
+                        const propertyCard = document.createElement('div');
+                        propertyCard.className = 'property-card';
+                        propertyCard.innerHTML = `
+                            <img src="${property.image}" alt="${property.title}" class="property-image">
+                            <div class="property-info">
+                                <h3 class="property-title">${property.title}</h3>
+                                <p class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    ${property.location}
+                                </p>
+                                <p class="property-price">
+                                    ₹${property.price.toLocaleString()}
+                                    ${property.type === 'rent' ? '/month' : ''}
+                                </p>
+                                <div class="property-details">
+                                    <span class="detail-item">
+                                        <i class="fas fa-bed"></i>
+                                        ${property.bedrooms} Beds
+                                    </span>
+                                    <span class="detail-item">
+                                        <i class="fas fa-bath"></i>
+                                        ${property.bathrooms} Baths
+                                    </span>
+                                    <span class="detail-item">
+                                        <i class="fas fa-ruler-combined"></i>
+                                        ${property.area} sq.ft
+                                    </span>
+                                </div>
+                                <a href="property-details.html?id=${property.id}" class="view-details-btn">View Details</a>
+                            </div>
+                        `;
+                        propertiesGrid.appendChild(propertyCard);
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                propertiesGrid.style.display = 'none';
+                noResults.style.display = 'block';
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Simulate API call (replace with actual API call in production)
+        function simulatePropertySearch(params) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Mock property data
+                    const properties = [
+                        {
+                            id: 1,
+                            title: 'Modern Apartment in Downtown',
+                            location: 'New York',
+                            price: 450000,
+                            type: 'buy',
+                            bedrooms: 2,
+                            bathrooms: 2,
+                            area: 1200,
+                            image: 'https://source.unsplash.com/random/800x600/?apartment'
+                        },
+                        {
+                            id: 2,
+                            title: 'Luxury Villa with Pool',
+                            location: 'Los Angeles',
+                            price: 1200000,
+                            type: 'buy',
+                            bedrooms: 4,
+                            bathrooms: 3,
+                            area: 3000,
+                            image: 'https://source.unsplash.com/random/800x600/?villa'
+                        },
+                        {
+                            id: 3,
+                            title: 'Cozy Family House',
+                            location: 'Chicago',
+                            price: 350000,
+                            type: 'buy',
+                            bedrooms: 3,
+                            bathrooms: 2,
+                            area: 1800,
+                            image: 'https://source.unsplash.com/random/800x600/?house'
+                        }
+                    ];
+
+                    // Filter properties based on search parameters
+                    let filteredProperties = properties;
+                    
+                    if (params.get('location')) {
+                        filteredProperties = filteredProperties.filter(p => 
+                            p.location.toLowerCase().includes(params.get('location').toLowerCase())
+                        );
+                    }
+
+                    if (params.get('want_to')) {
+                        filteredProperties = filteredProperties.filter(p => 
+                            p.type === params.get('want_to')
+                        );
+                    }
+
+                    if (params.get('property_type')) {
+                        filteredProperties = filteredProperties.filter(p => 
+                            p.property_type === params.get('property_type')
+                        );
+                    }
+
+                    if (params.get('price_range')) {
+                        const [min, max] = params.get('price_range').split('-').map(Number);
+                        filteredProperties = filteredProperties.filter(p => 
+                            p.price >= min && p.price <= max
+                        );
+                    }
+
+                    resolve(filteredProperties);
+                }, 1000);
+            });
+        }
+
+        // Initialize the page
+        window.addEventListener('load', () => {
+            displaySearchFilters();
+            displayProperties();
+        });
+    </script>
+</body>
+</html> 

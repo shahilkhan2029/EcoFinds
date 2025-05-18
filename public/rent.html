@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Properties | PrimeHomes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://source.unsplash.com/random/1920x1080/?apartment') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover .property-image {
+            transform: scale(1.05);
+        }
+
+        .property-details {
+            padding: 20px;
+        }
+
+        .property-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .property-location {
+            color: #666;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .property-location i {
+            color: var(--primary);
+        }
+
+        .property-price {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+        }
+
+        .feature i {
+            color: var(--primary);
+        }
+
+        .view-button {
+            display: block;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .view-button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .no-properties {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .no-properties i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .no-properties h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .no-properties p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .loading i {
+            font-size: 40px;
+            color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 60px 20px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>Rental Properties</h1>
+        <p>Find your perfect rental property from our extensive collection of apartments, houses, and more</p>
+    </div>
+
+    <div class="container">
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner"></i>
+        </div>
+
+        <div class="properties-grid" id="propertiesGrid">
+            <!-- Properties will be populated by JavaScript -->
+        </div>
+
+        <div class="no-properties" id="noProperties" style="display: none;">
+            <i class="fas fa-home"></i>
+            <h3>No Properties Available</h3>
+            <p>There are currently no rental properties available. Please check back later.</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to show loading state
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('propertiesGrid').style.display = 'none';
+            document.getElementById('noProperties').style.display = 'none';
+        }
+
+        // Function to hide loading state
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Function to display properties
+        async function displayProperties() {
+            showLoading();
+            const propertiesGrid = document.getElementById('propertiesGrid');
+            const noProperties = document.getElementById('noProperties');
+
+            try {
+                // Here you would typically make an API call to your backend
+                // For now, we'll use mock data
+                const properties = await simulatePropertyFetch();
+                
+                if (properties.length === 0) {
+                    propertiesGrid.style.display = 'none';
+                    noProperties.style.display = 'block';
+                } else {
+                    propertiesGrid.style.display = 'grid';
+                    noProperties.style.display = 'none';
+                    propertiesGrid.innerHTML = '';
+
+                    properties.forEach(property => {
+                        const propertyCard = document.createElement('div');
+                        propertyCard.className = 'property-card';
+                        propertyCard.innerHTML = `
+                            <img src="${property.image}" alt="${property.title}" class="property-image">
+                            <div class="property-details">
+                                <h2 class="property-title">${property.title}</h2>
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    ${property.location}
+                                </div>
+                                <div class="property-price">
+                                    ₹${property.price.toLocaleString()}/month
+                                </div>
+                                <div class="property-features">
+                                    <div class="feature">
+                                        <i class="fas fa-bed"></i>
+                                        ${property.bedrooms} Beds
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-bath"></i>
+                                        ${property.bathrooms} Baths
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-ruler-combined"></i>
+                                        ${property.area} sq ft
+                                    </div>
+                                </div>
+                                <a href="property-details.html?id=${property.id}" class="view-button">View Details</a>
+                            </div>
+                        `;
+                        propertiesGrid.appendChild(propertyCard);
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                propertiesGrid.style.display = 'none';
+                noProperties.style.display = 'block';
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Simulate API call (replace with actual API call in production)
+        function simulatePropertyFetch() {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Mock property data
+                    resolve([
+                        {
+                            id: 1,
+                            title: 'Modern Studio Apartment',
+                            location: 'New York',
+                            price: 2500,
+                            bedrooms: 1,
+                            bathrooms: 1,
+                            area: 600,
+                            image: 'https://source.unsplash.com/random/800x600/?studio-apartment'
+                        },
+                        {
+                            id: 2,
+                            title: 'Luxury 2-Bedroom Apartment',
+                            location: 'Los Angeles',
+                            price: 3500,
+                            bedrooms: 2,
+                            bathrooms: 2,
+                            area: 1200,
+                            image: 'https://source.unsplash.com/random/800x600/?apartment'
+                        },
+                        {
+                            id: 3,
+                            title: 'Cozy Family House',
+                            location: 'Chicago',
+                            price: 2800,
+                            bedrooms: 3,
+                            bathrooms: 2,
+                            area: 1800,
+                            image: 'https://source.unsplash.com/random/800x600/?house'
+                        },
+                        {
+                            id: 4,
+                            title: 'Penthouse with City View',
+                            location: 'Miami',
+                            price: 5000,
+                            bedrooms: 3,
+                            bathrooms: 2,
+                            area: 2000,
+                            image: 'https://source.unsplash.com/random/800x600/?penthouse'
+                        },
+                        {
+                            id: 5,
+                            title: 'Suburban Family Home',
+                            location: 'Boston',
+                            price: 3200,
+                            bedrooms: 4,
+                            bathrooms: 3,
+                            area: 2200,
+                            image: 'https://source.unsplash.com/random/800x600/?suburban'
+                        },
+                        {
+                            id: 6,
+                            title: 'Contemporary Townhouse',
+                            location: 'Seattle',
+                            price: 2800,
+                            bedrooms: 3,
+                            bathrooms: 2,
+                            area: 1800,
+                            image: 'https://source.unsplash.com/random/800x600/?townhouse'
+                        }
+                    ]);
+                }, 1000);
+            });
+        }
+
+        // Initialize the page
+        window.addEventListener('load', displayProperties);
+    </script>
+</body>
+</html> 

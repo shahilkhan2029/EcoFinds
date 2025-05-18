@@ -1,0 +1,19 @@
+# Allow access to all files in includes directory
+<IfModule mod_authz_core.c>
+    Require all granted
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order Allow,Deny
+    Allow from all
+</IfModule>
+
+<Files *.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# Allow access to header.php specifically
+<Files "header.php">
+    Order Allow,Deny
+    Allow from all
+</Files> 

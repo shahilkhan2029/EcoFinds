@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeHomes - Find Your Dream Property</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Header Styles */
+        .main-header {
+            background-color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .main-header:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .main-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            font-size: 24px;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover i {
+            color: #0056b3;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF6B6B;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover h1 {
+            color: #ff5252;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #007bff;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #007bff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #007bff;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .auth-btn.login {
+            background-color: #f8f9fa;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .auth-btn.login:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .auth-btn.signup {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .auth-btn.signup:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/random/1920x1080/?house') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Search Section */
+        .search-section {
+            background-color: white;
+            padding: 40px 0;
+            margin-top: -50px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-group select,
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Featured Properties Section */
+        .featured-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .property-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .property-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.1);
+        }
+
+        .property-info {
+            padding: 20px;
+        }
+
+        .property-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .property-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .property-price {
+            font-size: 1.3rem;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .property-features {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+        }
+
+        .feature i {
+            color: #007bff;
+        }
+
+        .property-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .property-link:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-section p {
+            color: #bdc3c7;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #bdc3c7;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid #34495e;
+        }
+
+        .footer-bottom p {
+            color: #bdc3c7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-home"></i>
+                <h1>PrimeHomes</h1>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="buy-property.html" class="nav-link">Buy</a>
+                <a href="rent-property.html" class="nav-link">Rent</a>
+                <a href="agents.html" class="nav-link">Agents</a>
+                <a href="services/home-loans.html" class="nav-link">Services</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="auth-btn login">Login</a>
+                <a href="signup.html" class="auth-btn signup">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Your Dream Home</h1>
+            <p>Discover the perfect property that matches your lifestyle and preferences</p>
+        </div>
+    </section>
+
+    <section class="search-section">
+        <form class="search-form" id="searchForm">
+            <div class="form-group">
+                <label for="want_to">I want to</label>
+                <select id="want_to" name="want_to">
+                    <option value="">Select</option>
+                    <option value="buy">Buy</option>
+                    <option value="rent">Rent</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <select id="location" name="location">
+                    <option value="">Select</option>
+                    <!-- Locations will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="property_type">Property Type</label>
+                <select id="property_type" name="property_type">
+                    <option value="">Select</option>
+                    <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="villa">Villa</option>
+                    <option value="commercial">Commercial</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price_range">Price Range</label>
+                <select id="price_range" name="price_range">
+                    <option value="">Select</option>
+                    <option value="0-100000">$0 - $100,000</option>
+                    <option value="100000-200000">$100,000 - $200,000</option>
+                    <option value="200000-300000">$200,000 - $300,000</option>
+                    <option value="300000-400000">$300,000 - $400,000</option>
+                    <option value="400000-500000">$400,000 - $500,000</option>
+                    <option value="500000-1000000">$500,000 - $1,000,000</option>
+                    <option value="1000000-999999999">$1,000,000+</option>
+                </select>
+            </div>
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+    </section>
+
+    <section class="featured-section">
+        <div class="section-title">
+            <h2>Featured Properties</h2>
+            <p>Discover our handpicked selection of premium properties</p>
+        </div>
+        <div class="properties-grid" id="featuredProperties">
+            <!-- Featured properties will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>PrimeHomes is your trusted partner in finding the perfect property. We offer a wide range of real estate services to meet your needs.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="buy-property.html">Buy Property</a></li>
+                    <li><a href="rent-property.html">Rent Property</a></li>
+                    <li><a href="agents.html">Our Agents</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Real Estate St, City, Country</p>
+                <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                <p><i class="fas fa-envelope"></i> info@primehomes.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PrimeHomes. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mock data for locations
+        const locations = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
+
+        // Mock data for featured properties
+        const featuredProperties = [
+            {
+                id: 1,
+                title: 'Modern Apartment in Downtown',
+                location: 'New York',
+                price: 450000,
+                type: 'apartment',
+                bedrooms: 2,
+                bathrooms: 2,
+                area: 1200,
+                image: 'https://source.unsplash.com/random/800x600/?apartment'
+            },
+            {
+                id: 2,
+                title: 'Luxury Villa with Pool',
+                location: 'Los Angeles',
+                price: 1200000,
+                type: 'villa',
+                bedrooms: 4,
+                bathrooms: 3,
+                area: 3000,
+                image: 'https://source.unsplash.com/random/800x600/?villa'
+            },
+            {
+                id: 3,
+                title: 'Cozy Family House',
+                location: 'Chicago',
+                price: 350000,
+                type: 'house',
+                bedrooms: 3,
+                bathrooms: 2,
+                area: 1800,
+                image: 'https://source.unsplash.com/random/800x600/?house'
+            },
+            {
+                id: 4,
+                title: 'Commercial Space for Rent',
+                location: 'Houston',
+                price: 2500,
+                type: 'commercial',
+                area: 2000,
+                image: 'https://source.unsplash.com/random/800x600/?office'
+            },
+            {
+                id: 5,
+                title: 'Penthouse with City View',
+                location: 'Phoenix',
+                price: 850000,
+                type: 'apartment',
+                bedrooms: 3,
+                bathrooms: 2,
+                area: 2000,
+                image: 'https://source.unsplash.com/random/800x600/?penthouse'
+            },
+            {
+                id: 6,
+                title: 'Suburban Family Home',
+                location: 'Philadelphia',
+                price: 420000,
+                type: 'house',
+                bedrooms: 4,
+                bathrooms: 3,
+                area: 2200,
+                image: 'https://source.unsplash.com/random/800x600/?suburban'
+            }
+        ];
+
+        // Populate locations dropdown
+        const locationSelect = document.getElementById('location');
+        locations.forEach(location => {
+            const option = document.createElement('option');
+            option.value = location;
+            option.textContent = location;
+            locationSelect.appendChild(option);
+        });
+
+        // Populate featured properties
+        const featuredPropertiesContainer = document.getElementById('featuredProperties');
+        featuredProperties.forEach(property => {
+            const propertyCard = document.createElement('div');
+            propertyCard.className = 'property-card';
+            propertyCard.innerHTML = `
+                <div class="property-image">
+                    <img src="${property.image}" alt="${property.title}">
+                </div>
+                <div class="property-info">
+                    <h3>${property.title}</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
+                    <div class="property-price">$${property.price.toLocaleString()}</div>
+                    <div class="property-features">
+                        ${property.bedrooms ? `<span class="feature"><i class="fas fa-bed"></i> ${property.bedrooms} Beds</span>` : ''}
+                        ${property.bathrooms ? `<span class="feature"><i class="fas fa-bath"></i> ${property.bathrooms} Baths</span>` : ''}
+                        <span class="feature"><i class="fas fa-ruler-combined"></i> ${property.area} sq ft</span>
+                    </div>
+                    <a href="property-details.html?id=${property.id}" class="property-link">View Details</a>
+                </div>
+            `;
+            featuredPropertiesContainer.appendChild(propertyCard);
+        });
+
+        // Handle search form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const searchParams = new URLSearchParams();
+            for (let [key, value] of formData.entries()) {
+                if (value) searchParams.append(key, value);
+            }
+            window.location.href = `search-results.html?${searchParams.toString()}`;
+        });
+    </script>
+</body>
+</html> 

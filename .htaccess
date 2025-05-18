@@ -1,0 +1,26 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /real/
+
+# Allow access to all files
+<IfModule mod_authz_core.c>
+    Require all granted
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order Allow,Deny
+    Allow from all
+</IfModule>
+
+# Set default index file
+DirectoryIndex index.php
+
+# Set proper MIME types
+AddType application/x-httpd-php .php
+
+# Handle 404 errors
+ErrorDocument 404 /real/404.php
+
+# Enable access control
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule> 

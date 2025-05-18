@@ -1,0 +1,217 @@
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>About Us</h3>
+            <p>PrimeHomes is your trusted partner in finding the perfect property. We offer a wide range of real estate services to meet your needs.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/buy-property.html">Buy Property</a></li>
+                <li><a href="/rent-property.html">Rent Property</a></li>
+                <li><a href="/agents.html">Our Agents</a></li>
+                <li><a href="/contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Property Types</h3>
+            <ul>
+                <li><a href="/search-results.html?property_type=house">Houses</a></li>
+                <li><a href="/search-results.html?property_type=apartment">Apartments</a></li>
+                <li><a href="/search-results.html?property_type=villa">Villas</a></li>
+                <li><a href="/search-results.html?property_type=commercial">Commercial</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Info</h3>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Real Estate St, City, Country</p>
+            <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+            <p><i class="fas fa-envelope"></i> info@primehomes.com</p>
+            <div class="newsletter">
+                <h4>Subscribe to Newsletter</h4>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 PrimeHomes. All rights reserved.</p>
+    </div>
+</footer>
+
+<style>
+    .main-footer {
+        background-color: #2c3e50;
+        color: white;
+        padding: 60px 0 20px;
+        margin-top: 60px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        color: #fff;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-section h3::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #007bff;
+    }
+
+    .footer-section p {
+        color: #bdc3c7;
+        margin-bottom: 15px;
+        line-height: 1.6;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+        color: #bdc3c7;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .footer-section ul li a:hover {
+        color: #fff;
+        transform: translateX(5px);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .social-links a {
+        color: #bdc3c7;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: #fff;
+        transform: translateY(-3px);
+    }
+
+    .newsletter {
+        margin-top: 20px;
+    }
+
+    .newsletter h4 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        color: #fff;
+    }
+
+    .newsletter-form {
+        display: flex;
+        gap: 10px;
+    }
+
+    .newsletter-form input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #34495e;
+        color: #fff;
+    }
+
+    .newsletter-form input::placeholder {
+        color: #bdc3c7;
+    }
+
+    .newsletter-form button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .newsletter-form button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 40px;
+        margin-top: 40px;
+        border-top: 1px solid #34495e;
+    }
+
+    .footer-bottom p {
+        color: #bdc3c7;
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .footer-section h3::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .social-links {
+            justify-content: center;
+        }
+
+        .newsletter-form {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<script>
+    document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+        
+        // Here you would typically send this to your backend
+        console.log('Newsletter subscription:', email);
+        
+        // Show success message
+        alert('Thank you for subscribing to our newsletter!');
+        this.reset();
+    });
+</script> 
